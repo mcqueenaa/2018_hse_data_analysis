@@ -1,0 +1,35 @@
+---
+title: "hw_4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 4.1
+```{r}
+data = read.csv('https://github.com/agricolamz/2019_data_analysis_for_linguists/blob/master/data/students/mcqueenaa/hw4_Advanced_Bayesian/hw4_caretta.csv')
+
+m = mean(data$vowel.dur, trim = 0.1)
+sd_ = sd(data$vowel.dur)
+mean_brs = mean(filter(data, speaker == 'brs02')$vowel.dur, trim = 0.1)
+sd_brs = sd(data[data$speaker == c('brs02'), ]$vowel.dur)
+
+mean_post <- weighted.mean(c(mean_prior, mean_brs), c(1/sd_, 1/sd_brs))
+sd_post <- (1/sd_+1/sd_brs)^(-1)
+
+data.frame(speaker = 'brs02', mean_post = mean_post, sd_post = sd_post)
+```
+### 4.2
+```{r}
+mean_tt = mean(filter(data, speaker == 'tt01')$vowel.dur, trim = 0.1)
+sd_tt = sd(data[data$speaker == c('tt01'), ]$vowel.dur)
+
+mean_post <- weighted.mean(c(mean_prior, mean_tt), c(1/sd_prior, 1/sd_tt))
+sd_post <- (1/sd_prior+1/sd_tt)^(-1)
+cred_int_l = qnorm(.025, mean = mean_post2, sd = sd_post2)
+cred_int_h = qnorm(.975, mean = mean_post2, sd = sd_post2)
+
+data.frame(speaker = 'tt01', int1 = cred_int_l, int2 = cred_int_h)
+```
