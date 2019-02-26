@@ -13,7 +13,7 @@ library(tidyverse)
 library(ca)
 
 chairs <- read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/mcqueenaa/hw5_CA_MCA/hw5_chairs.csv')
-rm.cols <- c("Shop", "WordDE", "Category") # ненужные переменные
+rm.cols <- c("Shop", "WordDE", "Category") 
 n_chairs <- chairs[, ! names(chairs) %in% rm.cols, drop = F]
 
 MCA <- MASS::mca(n_chairs) 
@@ -56,5 +56,5 @@ colreg_col %>%
 
 ### 5.4
 ```
-В академической речи цвета не употребляются, в разговорной речи часто употребляются black и white, а в художественной же литературе часто используется множество различных цветов.
+Г‚ Г ГЄГ Г¤ГҐГ¬ГЁГ·ГҐГ±ГЄГ®Г© Г°ГҐГ·ГЁ Г¶ГўГҐГІГ  Г­ГҐ ГіГЇГ®ГІГ°ГҐГЎГ«ГїГѕГІГ±Гї, Гў Г°Г Г§ГЈГ®ГўГ®Г°Г­Г®Г© Г°ГҐГ·ГЁ Г·Г Г±ГІГ® ГіГЇГ®ГІГ°ГҐГЎГ«ГїГѕГІГ±Гї black ГЁ white, Г  Гў ГµГіГ¤Г®Г¦ГҐГ±ГІГўГҐГ­Г­Г®Г© Г¦ГҐ Г«ГЁГІГҐГ°Г ГІГіГ°ГҐ Г·Г Г±ГІГ® ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї Г¬Г­Г®Г¦ГҐГ±ГІГўГ® Г°Г Г§Г«ГЁГ·Г­Г»Гµ Г¶ГўГҐГІГ®Гў.
 ```
