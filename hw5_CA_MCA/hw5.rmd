@@ -1,0 +1,60 @@
+---
+title: "hw_5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 5.1
+```{r}
+library(tidyverse)
+library(ca)
+
+chairs <- read.csv('https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/mcqueenaa/hw5_CA_MCA/hw5_chairs.csv')
+rm.cols <- c("Shop", "WordDE", "Category") # ненужные переменные
+n_chairs <- chairs[, ! names(chairs) %in% rm.cols, drop = F]
+
+MCA <- MASS::mca(n_chairs) 
+chairs <- cbind(chairs, MCA$rs)
+vars <- as_data_frame(MCA$cs)
+vars$var_names <- rownames(MCA$cs)
+
+chairs %>% 
+  ggplot(aes(`1`, `2`))+
+  geom_point(aes(color = Category))+
+  geom_text(data = vars, aes(`1`, `2`, label = var_names))+
+  stat_ellipse(aes(color = Category))+
+  theme_bw()+
+  scale_x_continuous(limits = c(-0.015, 0.02))
+```
+### 5.2
+```{r}
+
+```
+
+### 5.3
+```{r}
+colreg <- read.csv("https://raw.githubusercontent.com/agricolamz/2019_data_analysis_for_linguists/master/data/students/mcqueenaa/hw5_CA_MCA/hw5_colreg.csv")
+
+rownames(colreg) <- colreg$colors
+
+ca <- ca(colreg[, -5])
+
+colreg_col <- data.frame(ca$colcoord)
+colreg_col$rows <- rownames(ca$colcoord)
+colreg_row <- data.frame(ca$rowcoord)
+colreg_row$rows <- rownames(ca$rowcoord)
+
+colreg_col %>%
+  ggplot(aes(Dim1, Dim2, label = rows))+
+  geom_text(color = "green")+
+  geom_text(data = colreg_row, color = "purple")+
+  theme_bw()
+```
+
+### 5.4
+```
+¬ академической речи цвета не употребл€ютс€, в разговорной речи часто употребл€ютс€ black и white, а в художественной же литературе часто используетс€ множество различных цветов.
+```
